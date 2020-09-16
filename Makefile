@@ -66,6 +66,12 @@ else ifeq ($(COIN),litecoin)
 DEFINES   += BIP44_COIN_TYPE=2 BIP44_COIN_TYPE_2=2 COIN_P2PKH_VERSION=48 COIN_P2SH_VERSION=50 COIN_FAMILY=1 COIN_COINID=\"Litecoin\" COIN_COINID_HEADER=\"LITECOIN\" COIN_COLOR_HDR=0xCCCCCC COIN_COLOR_DB=0xE6E6E6 COIN_COINID_NAME=\"Litecoin\" COIN_COINID_SHORT=\"LTC\" COIN_NATIVE_SEGWIT_PREFIX=\"ltc\" COIN_KIND=COIN_KIND_LITECOIN COIN_FLAGS=FLAG_SEGWIT_CHANGE_SUPPORT
 APPNAME ="Litecoin"
 APP_LOAD_PARAMS += --path $(APP_PATH)
+else ifeq ($(COIN),bitcoin_vault)
+# Bitcoin Vault
+DEFINES   += BIP44_COIN_TYPE=440 BIP44_COIN_TYPE_2=0 COIN_P2PKH_VERSION=0 COIN_P2SH_VERSION=5 COIN_FAMILY=1 COIN_COINID=\"Bitcoin\\x20Vault\" COIN_COINID_HEADER=\"BITCOINVAULT\" COIN_COLOR_HDR=0xFCB653 COIN_COLOR_DB=0xFEDBA9 COIN_COINID_NAME=\"BitcoinVault\" COIN_COINID_SHORT=\"BTCV\" COIN_NATIVE_SEGWIT_PREFIX=\"royale\" COIN_KIND=COIN_KIND_BITCOIN_VAULT COIN_FLAGS=FLAG_SEGWIT_CHANGE_SUPPORT
+DEFINES_LIB=# we're not using the lib :)
+APPNAME ="Bitcoin Vault"
+APP_LOAD_PARAMS += --path $(APP_PATH)
 else ifeq ($(COIN),dogecoin)
 # Doge
 DEFINES   += BIP44_COIN_TYPE=3 BIP44_COIN_TYPE_2=3 COIN_P2PKH_VERSION=30 COIN_P2SH_VERSION=22 COIN_FAMILY=1 COIN_COINID=\"Dogecoin\" COIN_COINID_HEADER=\"DOGECOIN\" COIN_COLOR_HDR=0x65D196 COIN_COLOR_DB=0xB2E8CB COIN_COINID_NAME=\"Dogecoin\" COIN_COINID_SHORT=\"DOGE\" COIN_KIND=COIN_KIND_DOGE
@@ -314,6 +320,6 @@ listvariants:
 else
 
 listvariants:
-	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private zcoin gamecredits zclassic xsn nix lbry ravencoin resistance
+	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold bitcoin_vault litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private zcoin gamecredits zclassic xsn nix lbry ravencoin resistance
 
 endif
