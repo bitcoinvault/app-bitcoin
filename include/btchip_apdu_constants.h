@@ -47,6 +47,7 @@
 #define BTCHIP_INS_GET_FIRMWARE_VERSION 0xC4
 #define BTCHIP_INS_COMPOSE_MOFN_ADDRESS 0xC6
 #define BTCHIP_INS_GET_POS_SEED 0xCA
+#define BTCHIP_INS_SET_BTCV_PASSWORD 0xD8
 #define BTCHIP_INS_DEBUG 0xD0
 
 #define BTCHIP_INS_ADM_INIT_KEYS 0x20
@@ -153,6 +154,7 @@ unsigned short btchip_apdu_sign_message(void);
 unsigned short btchip_apdu_get_random(void);
 unsigned short btchip_apdu_get_firmware_version(void);
 
+unsigned short btchip_apdu_set_btcv_password(void);
 unsigned short btchip_apdu_get_coin_version(void);
 
 #endif

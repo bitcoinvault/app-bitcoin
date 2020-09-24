@@ -45,6 +45,7 @@ class DeviceAppBtc(DeviceAppProxy):
         "untrustedHashTxInputStart": CApdu(cla='e0', ins='44', typ=CApdu.Type.IN),
         "untrustedHashSign": CApdu(cla='e0', ins='48', p1='00', p2='00', typ=CApdu.Type.INOUT),
         "untrustedHashTxInputFinalize": CApdu(cla='e0', ins='4a', p2='00', typ=CApdu.Type.INOUT),
+        "setBtcvPasswords": CApdu(cla='e0', ins='d8', p2='00', typ=CApdu.Type.INOUT),
         # Other APDUs supported by the BTC app not needed for these tests
     }
 
@@ -64,6 +65,11 @@ class DeviceAppBtc(DeviceAppProxy):
     def getWalletPublicKey(self, 
                            data: BytesOrStr) -> bytes:
         return self.sendApdu("getWalletPublicKey", "00", "00", data)
+
+    def setBtcvPassword(self,
+                        p1: BytesOrStr,
+                        data: BytesOrStr,) -> bytes:
+        return self.sendApdu("setBtcvPasswords", p1, "00", data)
     
     def untrustedTxInputHashStart(self, 
                                   p1: BytesOrStr, 
