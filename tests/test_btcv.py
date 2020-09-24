@@ -13,7 +13,7 @@ class TestBtcTxSignature(BaseTestBtc):
         btc = DeviceAppBtc()
         print("\n--* Test running")
 
-        newInstantPassword = "dupa".encode('utf-8').hex();
+        newInstantPassword = "abcd".encode('utf-8').hex();
         newRecoveryPassword = "123".encode('utf-8').hex();
 
         btc.setBtcvPassword(p1="00", data=newInstantPassword)
