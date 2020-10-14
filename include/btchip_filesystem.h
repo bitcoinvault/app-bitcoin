@@ -71,8 +71,8 @@ typedef struct btchip_storage_s {
     unsigned char fidoTransport;
 
     uint8_t pubKeyRequestRestriction;
-    char btcvInstantPassword[MAX_BTCV_PASSWORD_LEN];
-    char btcvRecoveryPassword[MAX_BTCV_PASSWORD_LEN];
+    unsigned char btcvInstantPassword[MAX_BTCV_PASSWORD_LEN];
+    unsigned char btcvRecoveryPassword[MAX_BTCV_PASSWORD_LEN];
 } btchip_storage_t;
 
 // the global nvram memory variable

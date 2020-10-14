@@ -224,7 +224,7 @@ void get_public_key(unsigned char* keyPath, cx_ecfp_public_key_t* public_key) {
 }
 
 // out should be 32 bytes, even only 20 bytes is significant for output
-void get_pubkey_hash160(unsigned char* keyPath, unsigned char* out) {
+void get_pubkey_hash160(unsigned char* keyPath, unsigned char* out, enum BtcvKeyType keyType) {
     cx_ecfp_public_key_t public_key;
     int keyLength;
     get_public_key(keyPath, &public_key);
@@ -302,10 +302,8 @@ unsigned short btchip_apdu_hash_input_finalize_full_internal(
                 os_memmove(transactionSummary->keyPath,
                            G_io_apdu_buffer + ISO_OFFSET_CDATA,
                            MAX_BIP32_PATH_LENGTH);
-
-                get_pubkey_hash160(transactionSummary->keyPath, btchip_context_D.tmpCtx.output.changeAddress);
+                get_pubkey_hash160(transactionSummary->keyPath, btchip_context_D.tmpCtx.output.changeAddress, Regular);
                 PRINTF("Change address = %.*H\n", 20, btchip_context_D.tmpCtx.output.changeAddress);
-
                 btchip_context_D.tmpCtx.output.changeInitialized = 1;
                 btchip_context_D.tmpCtx.output.changeAccepted = 0;
 

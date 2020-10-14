@@ -66,6 +66,10 @@ class DeviceAppBtc(DeviceAppProxy):
                            data: BytesOrStr) -> bytes:
         return self.sendApdu("getWalletPublicKey", "00", "00", data)
 
+    def getWallet3KeysAddress(self,
+                           data: BytesOrStr) -> bytes:
+        return self.sendApdu("getWalletPublicKey", "00", "04", data)
+
     def setBtcvPassword(self,
                         p1: BytesOrStr,
                         data: BytesOrStr,) -> bytes:

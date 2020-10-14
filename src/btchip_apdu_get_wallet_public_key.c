@@ -23,12 +23,13 @@
 #include "segwit_addr.h"
 #include "cashaddr.h"
 #include "btchip_apdu_get_wallet_public_key.h"
+#include "btchip_btcv3Keys.h"
 
 int get_public_key_chain_code(unsigned char* keyPath, bool uncompressedPublicKeys, unsigned char* publicKey, unsigned char* chainCode) {
     cx_ecfp_private_key_t private_key;
     cx_ecfp_public_key_t public_key;
     int keyLength = 0;
-    btchip_private_derive_keypair(keyPath, 1, chainCode, &private_key, &public_key);
+    btchip_private_derive_keypair(keyPath, 1, chainCode, &private_key, &public_key, Regular);
     // Then encode it
     if (uncompressedPublicKeys) {
         keyLength = 65;
@@ -59,6 +60,8 @@ unsigned short btchip_apdu_get_wallet_public_key() {
     if (display && btchip_context_D.called_from_swap) {
         return BTCHIP_SW_INCORRECT_DATA;
     }
+    bool btcv3KeysAddr = (G_io_apdu_buffer[ISO_OFFSET_P2] == P2_BTCV_3KEYS_ADDR);
+
     switch (G_io_apdu_buffer[ISO_OFFSET_P1]) {
     case P1_NO_DISPLAY:
     case P1_DISPLAY:
@@ -78,6 +81,11 @@ unsigned short btchip_apdu_get_wallet_public_key() {
         break;
     case P2_CASHADDR:
         if (G_coin_config->kind != COIN_KIND_BITCOIN_CASH) {
+            return BTCHIP_SW_INCORRECT_P1_P2;
+        }
+        break;
+    case P2_BTCV_3KEYS_ADDR:
+        if (G_coin_config->kind != COIN_KIND_BITCOIN_VAULT) {
             return BTCHIP_SW_INCORRECT_P1_P2;
         }
         break;
@@ -125,8 +133,11 @@ unsigned short btchip_apdu_get_wallet_public_key() {
                                   tmp);
         keyLength =
             cashaddr_encode(tmp, 20, G_io_apdu_buffer + 67, 50, CASHADDR_P2PKH);
+    } else if(btcv3KeysAddr) {
+        generate3KeysScript(keyPath, chainCode);
+
     } else if (!(segwit || nativeSegwit)) {
-        keyLength = btchip_public_key_to_encoded_base58(
+	keyLength = btchip_public_key_to_encoded_base58(
             G_io_apdu_buffer + 1,  // IN
             keyLength,             // INLEN
             G_io_apdu_buffer + 67, // OUT

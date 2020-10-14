@@ -230,7 +230,6 @@ unsigned short btchip_public_key_to_encoded_base58(
     unsigned short outlen, unsigned short version,
     unsigned char alreadyHashed) {
     unsigned char tmpBuffer[34];
-
     unsigned char versionSize = (version > 255 ? 2 : 1);
     size_t outputLen;
 
@@ -295,7 +294,8 @@ void btchip_private_derive_keypair(unsigned char *bip32Path,
                                    unsigned char derivePublic,
                                    unsigned char *out_chainCode,
                                    cx_ecfp_private_key_t * private_key,
-                                   cx_ecfp_public_key_t* public_key) {
+                                   cx_ecfp_public_key_t* public_key,
+				                   enum BtcvKeyType keyType) {
     unsigned char bip32PathLength;
     unsigned char i;
     union {
@@ -314,6 +314,15 @@ void btchip_private_derive_keypair(unsigned char *bip32Path,
     }
 
     io_seproxyhal_io_heartbeat();
+    if (G_coin_config->kind == COIN_KIND_BITCOIN_VAULT && keyType != Regular)
+    {
+	if(keyType == Instant)
+            os_perso_derive_node_with_seed_key(0, CX_CURVE_256K1, bip32PathInt, bip32PathLength, privateComponent, out_chainCode, N_btchip.btcvInstantPassword, 32);
+	else if(keyType == Recovery)
+            os_perso_derive_node_with_seed_key(0, CX_CURVE_256K1, bip32PathInt, bip32PathLength, privateComponent, out_chainCode, N_btchip.btcvRecoveryPassword, 32);
+    }
+    else
+    {
 
     os_perso_derive_node_bip32(CX_CURVE_256K1, u.bip32PathInt, bip32PathLength,
                                u.privateComponent, out_chainCode);
@@ -326,6 +335,7 @@ void btchip_private_derive_keypair(unsigned char *bip32Path,
                                 private_key, 1);
     }
 
+    }
     io_seproxyhal_io_heartbeat();
 
     os_memset(u.privateComponent, 0, sizeof(u.privateComponent));

@@ -178,7 +178,7 @@ void btchip_bagl_user_action_signtx(unsigned char confirming, unsigned char dire
     if (confirming) {
         unsigned char hash[32];
         // Fetch the private key
-        btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, NULL);
+        btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, NULL, Regular);
         if (btchip_context_D.usingOverwinter) {
             cx_hash(&btchip_context_D.transactionHashFull.blake2b.header, CX_LAST, hash, 0, hash, 32);
         }

@@ -30,6 +30,8 @@
 
 #define OUTPUT_SCRIPT_NATIVE_WITNESS_PROGRAM_OFFSET 3
 
+enum BtcvKeyType{Regular, Instant, Recovery};
+
 unsigned char btchip_output_script_is_regular(unsigned char *buffer);
 unsigned char btchip_output_script_is_p2sh(unsigned char *buffer);
 unsigned char btchip_output_script_is_op_return(unsigned char *buffer);
@@ -69,7 +71,8 @@ void btchip_private_derive_keypair(unsigned char *bip32Path,
                                    unsigned char derivePublic,
                                    unsigned char *out_chainCode,
                                    cx_ecfp_private_key_t * private_key,
-                                   cx_ecfp_public_key_t* public_key);
+                                   cx_ecfp_public_key_t* public_key,
+                                   enum BtcvKeyType keyType);
 
 unsigned char bip44_derivation_guard(unsigned char *bip32Path, bool is_change_path);
 unsigned char enforce_bip44_coin_type(unsigned char *bip32Path, bool for_pubkey);

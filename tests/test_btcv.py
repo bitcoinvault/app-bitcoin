@@ -38,12 +38,15 @@ expected_pubkeys_recovery = [
 class TestBtcTxSignature(BaseTestBtc):
 
     @pytest.mark.parametrize("test_data", [3])
-    def test_submit_trusted_segwit_input_btc_transaction(self, test_data: int) -> None:
+    def test_get_btcv_three_public_keys(self, test_data: int) -> None:
         btc = DeviceAppBtc()
         print("\n--* Test running")
 
         btc.setBtcvPassword(p1="00", data=newInstantPassword)
         btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
+        #
+        btc.getWallet3KeysAddress(output_paths[0])
+        btc.getWallet3KeysAddress(output_paths[1])
 
         print("\n--* Get Wallet Public Key - for each tx output path")
         wpk_responses = [btc.getWalletPublicKey(output_path) for output_path in output_paths]

@@ -253,7 +253,7 @@ unsigned short btchip_compute_hash() {
                     32, hash, 32);
             btchip_private_derive_keypair(
                 btchip_context_D.transactionSummary.keyPath, 0,
-                NULL, &private_key, NULL);
+                NULL, &private_key, NULL, Regular);
             btchip_sign_finalhash(
                 &private_key, hash, sizeof(hash), // IN
                 G_io_apdu_buffer, 100,                        // OUT
