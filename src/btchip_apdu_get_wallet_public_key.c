@@ -134,8 +134,12 @@ unsigned short btchip_apdu_get_wallet_public_key() {
         keyLength =
             cashaddr_encode(tmp, 20, G_io_apdu_buffer + 67, 50, CASHADDR_P2PKH);
     } else if(btcv3KeysAddr) {
-        generate3KeysScript(keyPath, chainCode);
-
+        G_io_apdu_buffer[0] = 20;
+        unsigned char hashBuffer[21];
+        hashBuffer[0] = 0x05;
+        generateScriptHash(hashBuffer+1, keyPath, chainCode);
+        size_t bufferLen = 34;
+        keyLength = btchip_public_key_to_encoded_base58(hashBuffer, 21, G_io_apdu_buffer + 67, bufferLen, 5, 1);
     } else if (!(segwit || nativeSegwit)) {
 	keyLength = btchip_public_key_to_encoded_base58(
             G_io_apdu_buffer + 1,  // IN

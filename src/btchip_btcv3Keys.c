@@ -34,25 +34,3 @@ void generateScriptHash(unsigned char *hashBuffer, unsigned char *keyPath, unsig
     btchip_public_key_hash160(scriptBuffer, 201, hashBuffer); // script hash, actually
     PRINTF("hashBuffer: %.*H\n", 20, hashBuffer);
 }
-
-void generate3KeysScript(unsigned char *keyPath, unsigned char *chainCode)
-{
-    PRINTF("MG1 generate3KeysScript\n");
-           
-    unsigned char hashBuffer[20];
-    generateScriptHash(hashBuffer, keyPath, chainCode);
-// WIP
-/*    unsigned char addrBuffer[34];
-    size_t bufferLen = 34;
-    btchip_encode_base58(hashBuffer, 20, addrBuffer, &bufferLen);
-*/
-/*    btchip_public_key_to_encoded_base58(
-                hashBuffer,                   // IN
-                20,                    // INLEN
-                addrBuffer, // OUT
-                34,                   // MAXOUTLEN
-                btchip_context_D.payToScriptHashVersion, 1);
-  */
-//  PRINTF("addrBuffer: %.*H\n", 34, addrBuffer);
-//    os_memmove(G_io_apdu_buffer + 67, addrBuffer, bufferLen);
-}

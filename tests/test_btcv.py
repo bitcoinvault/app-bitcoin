@@ -42,12 +42,6 @@ class TestBtcTxSignature(BaseTestBtc):
         btc = DeviceAppBtc()
         print("\n--* Test running")
 
-        btc.setBtcvPassword(p1="00", data=newInstantPassword)
-        btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
-        #
-        btc.getWallet3KeysAddress(output_paths[0])
-        btc.getWallet3KeysAddress(output_paths[1])
-
         print("\n--* Get Wallet Public Key - for each tx output path")
         wpk_responses = [btc.getWalletPublicKey(output_path) for output_path in output_paths]
         print("    OK")
@@ -55,3 +49,16 @@ class TestBtcTxSignature(BaseTestBtc):
         for pubkey in pubkeys_data:
             print(pubkey)
             assert  pubkey.pubkey_comp[1:].hex() in expected_pubkeys
+
+        btc.setBtcvPassword(p1="00", data=newInstantPassword)
+        btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
+
+        resp1 = btc.getWallet3KeysAddress(output_paths[0])
+        pubkey = self.split_pubkey_data(resp1)
+        print(pubkey)
+        assert pubkey.address == '3EdQTHmGeyuGeLNfCKxbwbP6McRXehvy2V'
+
+        resp2 = btc.getWallet3KeysAddress(output_paths[1])
+        pubkey = self.split_pubkey_data(resp2)
+        print(pubkey)
+        assert pubkey.address == '3En9L7skprN9kGEtXrBEfZowKo6gVhRevb'

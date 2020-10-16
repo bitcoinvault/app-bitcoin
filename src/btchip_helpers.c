@@ -316,9 +316,9 @@ void btchip_private_derive_keypair(unsigned char *bip32Path,
     io_seproxyhal_io_heartbeat();
     if (G_coin_config->kind == COIN_KIND_BITCOIN_VAULT && keyType != Regular)
     {
-	if(keyType == Instant)
+        if(keyType == Instant)
             os_perso_derive_node_with_seed_key(0, CX_CURVE_256K1, bip32PathInt, bip32PathLength, privateComponent, out_chainCode, N_btchip.btcvInstantPassword, 32);
-	else if(keyType == Recovery)
+        else if(keyType == Recovery)
             os_perso_derive_node_with_seed_key(0, CX_CURVE_256K1, bip32PathInt, bip32PathLength, privateComponent, out_chainCode, N_btchip.btcvRecoveryPassword, 32);
     }
     else
