@@ -56,9 +56,9 @@ class TestBtcTxSignature(BaseTestBtc):
         resp1 = btc.getWallet3KeysAddress(output_paths[0])
         pubkey = self.split_pubkey_data(resp1)
         print(pubkey)
-        assert pubkey.address == '3EdQTHmGeyuGeLNfCKxbwbP6McRXehvy2V'
+        assert pubkey.address == 'RHU4v18eBZVExTUTAf3qDxACQHxw44YZzV'
 
         resp2 = btc.getWallet3KeysAddress(output_paths[1])
         pubkey = self.split_pubkey_data(resp2)
         print(pubkey)
-        assert pubkey.address == '3En9L7skprN9kGEtXrBEfZowKo6gVhRevb'
+        assert pubkey.address == 'RBoRVh3V1pzWpQCaJj5ak1v2v6TFikYnvp'
