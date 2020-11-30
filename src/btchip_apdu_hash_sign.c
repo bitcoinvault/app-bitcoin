@@ -178,7 +178,19 @@ void btchip_bagl_user_action_signtx(unsigned char confirming, unsigned char dire
     if (confirming) {
         unsigned char hash[32];
         // Fetch the private key
-        btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, NULL, Regular);
+        if (COIN_KIND_BITCOIN_VAULT == G_coin_config->kind)
+        {
+            if(BTCV_TX_TYPE_INSTANT == btchip_context_D.transactionContext.btcvTxType)
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Instant);
+            else if(BTCV_TX_TYPE_RECOVERY == btchip_context_D.transactionContext.btcvTxType)
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Recovery);
+            else
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Regular);
+        }
+        else
+        {
+            btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, NULL, Regular);
+        }
         if (btchip_context_D.usingOverwinter) {
             cx_hash(&btchip_context_D.transactionHashFull.blake2b.header, CX_LAST, hash, 0, hash, 32);
         }
@@ -206,6 +218,9 @@ void btchip_bagl_user_action_signtx(unsigned char confirming, unsigned char dire
         sw = BTCHIP_SW_CONDITIONS_OF_USE_NOT_SATISFIED;
         btchip_context_D.outLength = 0;
     }
+
+    if (COIN_KIND_BITCOIN_VAULT == G_coin_config->kind)
+        btchip_context_D.transactionContext.btcvTxType = BTCV_TX_TYPE_ALERT;
 
     if (!direct) {
         G_io_apdu_buffer[btchip_context_D.outLength++] = sw >> 8;
