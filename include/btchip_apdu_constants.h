@@ -48,6 +48,7 @@
 #define BTCHIP_INS_COMPOSE_MOFN_ADDRESS 0xC6
 #define BTCHIP_INS_GET_POS_SEED 0xCA
 #define BTCHIP_INS_SET_BTCV_PASSWORD 0xD8
+#define BTCHIP_INS_USE_BTCV_SIGNATURE_PASSWORD 0xD9
 #define BTCHIP_INS_DEBUG 0xD0
 
 #define BTCHIP_INS_ADM_INIT_KEYS 0x20
@@ -130,6 +131,9 @@
 #define BITID_DERIVE 0xB11D
 #define BITID_DERIVE_MULTIPLE 0xB11E
 
+#define BTCV_PASSWORD_TYPE_INSTANT 0x00
+#define BTCV_PASSWORD_TYPE_RECOVERY 0x01
+
 #include "os.h"
 #include "btchip_secure_value.h"
 
@@ -155,6 +159,7 @@ unsigned short btchip_apdu_get_random(void);
 unsigned short btchip_apdu_get_firmware_version(void);
 
 unsigned short btchip_apdu_set_btcv_password(void);
+unsigned short btchip_apdu_use_btcv_signature_password(void);
 unsigned short btchip_apdu_get_coin_version(void);
 
 #endif

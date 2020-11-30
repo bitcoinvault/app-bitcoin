@@ -67,6 +67,7 @@ unsigned char const DISPATCHER_CLA[] = {
     BTCHIP_CLA, // btchip_apdu_get_firmware_version,
     BTCHIP_CLA, // btchip_apdu_get_coin_version
     BTCHIP_CLA, // btchip_apdu_set_btcv_password
+    BTCHIP_CLA, // btchip_apdu_use_btcv_signature_password
 };
 
 unsigned char const DISPATCHER_INS[] = {
@@ -84,6 +85,7 @@ unsigned char const DISPATCHER_INS[] = {
     BTCHIP_INS_GET_FIRMWARE_VERSION,     // btchip_apdu_get_firmware_version,
     BTCHIP_INS_GET_COIN_VER,           // btchip_apdu_get_coin_version
     BTCHIP_INS_SET_BTCV_PASSWORD,	// btchip_apdu_set_btcv_password
+    BTCHIP_INS_USE_BTCV_SIGNATURE_PASSWORD // btchip_apdu_use_btcv_signature_password
 };
 
 unsigned char const DISPATCHER_DATA_IN[] = {
@@ -101,6 +103,7 @@ unsigned char const DISPATCHER_DATA_IN[] = {
     0, // btchip_apdu_get_firmware_version,
     0, // btchip_apdu_get_coin_version
     1,	// btchip_apdu_set_btcv_password
+    1, // btchip_apdu_use_btcv_signature_password
 };
 
 apduProcessingFunction const DISPATCHER_FUNCTIONS[] = {
@@ -118,4 +121,5 @@ apduProcessingFunction const DISPATCHER_FUNCTIONS[] = {
     btchip_apdu_get_firmware_version,
     btchip_apdu_get_coin_version,
     btchip_apdu_set_btcv_password,
+    btchip_apdu_use_btcv_signature_password,
 };

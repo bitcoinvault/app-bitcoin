@@ -34,6 +34,10 @@
 #define ZCASH_USING_OVERWINTER 0x01
 #define ZCASH_USING_OVERWINTER_SAPLING 0x02
 
+#define BTCV_TX_TYPE_ALERT 0x00
+#define BTCV_TX_TYPE_INSTANT 0x01
+#define BTCV_TX_TYPE_RECOVERY 0x02
+
 enum btchip_modes_e {
     BTCHIP_MODE_ISSUER = 0x00,
     BTCHIP_MODE_SETUP_NEEDED = 0xff,
@@ -134,6 +138,8 @@ struct btchip_transaction_context_s {
     unsigned char relaxed;
     /** If the transaction consumes a P2SH input */
     unsigned char consumeP2SH;
+    /** Bitcoin Vault transaction type**/
+    unsigned char btcvTxType;
 };
 typedef struct btchip_transaction_context_s btchip_transaction_context_t;
 
