@@ -104,57 +104,49 @@ def prepare_untrusted_hash_sign(tx_to_sign_outputs):
     untrustedHashSign.commands.append("e0480000" + item_bytes_len(payload) + payload)
     return untrustedHashSign
 
-test_ms = TestData(prevout_data = PrevoutData(trusted_input_index="00000000",
-                                              version="02000000",
-                                              prevtxid="8f8faf768d751a51402aa6fd96f223555b90dd8dc6d9bbf5ad42a6bf5c440449",
-                                              prevn="00000000",
-                                              scriptsig="473044022046c79c2ded548c46a357dd69965eeebb0217547860a18e2048b197c1fc1a375b02204bb399fc7aec43ecf01d6fd5d6077ab3f9661a90960ff813d6f6c97afd67522c01",
-                                              sequence="feffffff",
-                                              outputs=["00ab90410000000017a9144d19b4a6e4676043f015221df9d6aa83b703598887", "641584d10300000017a9145566de026561ea9cf58547e934ee1623a00cbc3787"],
-                                              locktime="65000000"),
-                   tx_to_sign_inputs=TxToSignInputs(version="02000000",
-                                                    # trustedinput="3200b85ff607c8b58f2679175d83481324983676d5b06167ee8f88ac36956c4e0040cfc90000000000ab904100000000a85e707195e0ef50",
-                                                    trustedinput="",
-                                                    redeemscript="514104478ecc8e902485b66c32b4bc500037e76458f86430ab32393d2c8eacf179b14d2dfead5d0858a4a7bce8d828abc9d29353c65e7b583b86154957a696814e84794104408cdf535029651f4167ea7dfa7e88c2255f325f086649b9fa6c6c1691591b22cb4d29919d932e55e1122b19cadde3b34462cc0679a3a59badc6679d8a85620341045939d3dea2a8775e25dab4a4ab0eed4e25e3b2c37c4d0a5985b50fae302220a48c43a47024c8eaee21b0752e77007ba7677a1df1c26266538d976693f5b00b9f53ae",
-                                                    sequence="ffffffff",
-                                                    use_trusted_input=True),
-                   tx_to_sign_outputs=TxToSignOutputs(outputs=["c0a695350000000017a91453cd9595b975a9dd33484753dcd29d5895d013ea87", "c07fdc0b0000000017a9141f70d71e9b8f2711cffa3dca62e95e3199fb9b7087"],
-                                                      locktime="65000000",
-                                                      signingpath="05""8000002C""800001B8""80000000""00000000""00000000"),
-                   expected_result="304402206027fc850cd4b7768d23d019493b0c262004382ff47757e90f5352e170cca7ee02201c0a76ffbfbf9196d12d6ee90c7dad88aa4607804e2305949607fefce75fef1901"
-                   )
-
-
-test_ljs = TestData(prevout_data = PrevoutData(trusted_input_index="00000001",
-                                              version="01000000",
-                                              prevtxid="4ea60aeac5252c14291d428915bd7ccd1bfc4af009f4d4dc57ae597ed0420b71",
-                                              prevn="01000000",
-                                              scriptsig="47304402201f36a12c240dbf9e566bc04321050b1984cd6eaf6caee8f02bb0bfec08e3354b022012ee2aeadcbbfd1e92959f57c15c1c6debb757b798451b104665aa3010569b49014104090b15bde569386734abf2a2b99f9ca6a50656627e77de663ca7325702769986cf26cc9dd7fdea0af432c8e2becc867c932e1b9dd742f2a108997c2252e2bdeb",
-                                              sequence="ffffffff",
-                                              outputs=["81b72e00000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88ac", "a0860100000000001976a9144533f5fb9b4817f713c48f0bfe96b9f50c476c9b88ac"],
-                                              locktime="00000000"),
-                    tx_to_sign_inputs=TxToSignInputs(version="01000000",
-                                                     trustedinput="",
-                                                     redeemscript="52210289b4a3ad52a919abd2bdd6920d8a6879b1e788c38aa76f0440a6f32a9f1996d02103a3393b1439d1693b063482c04bd40142db97bdf139eedd1b51ffb7070a37eac321030b9a409a1e476b0d5d17b804fcdb81cf30f9b99c6f3ae1178206e08bc500639853ae",
-                                                     sequence="ffffffff",
-                                                     use_trusted_input=False),
-                    tx_to_sign_outputs=TxToSignOutputs(outputs=["905f0100000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88ac"],
-                                                       locktime="00000000",
-                                                       signingpath="03""80000000""00000000""00000000"),
-                    expected_result="3045022100a753fcc4c3befd6208b2f8ffd5cc2a8de276d4c3ce9b1d5546b04ccb74dafa6802203b6e429f9e5c710f70b263873ebc3c745dc17daa64a2ef386742b9a4cc4efd7501"
-                    )
-
+test_alert_single_input = TestData(prevout_data = PrevoutData(trusted_input_index="00000000",
+                                                              version="02000000",
+                                                              prevtxid="0404bbabf58a527299178e4f5ba6f5bdff2c5fd85ac1f412cb75aaff5353ad83",
+                                                              prevn="00000000",
+                                                              scriptsig="473044022038479cf30be734181af03fbb6b3b7059d8e17dbb370924a2e98cf59dc5280ee502203af3414c6d944a79c0e409423490bb23b3c6865a02cd04827422513a76e0050801",
+                                                              sequence="feffffff",
+                                                              outputs=["00ab90410000000017a91447d8c9cd8f60b13c7cf2397eb7c121cbf7d9cff587", "641584d10300000017a914a286dde661c73740f69afdd16422032d7a1b8dd687"],
+                                                              locktime="65000000"),
+                                    tx_to_sign_inputs=TxToSignInputs(version="02000000",
+                                                                     trustedinput="",
+                                                                     redeemscript="635167635267536868410450831f9831a46e3b264034ae2d8ef24555a2aa9e66579eab91e4a7c7794e01c7f4c88aff1f69c6acfd2f857f33dbf102a9b79429828110447d0743f705e6bcd041048f54726f142383fe06f7385d6445b44d6f0a0dac7bdd7a6ea7dec21cdd7115777d4305aabd65b8566055cddd0135efb617718c0fc92d174d89452bb43b78061a4104d96eb418af0c6659526f236452d96b5f5c0bf0469ba824868e58ba25c66eba9cf63a0d84eac158aa976c17328ac1ae75c7c9949f8c57571e046c8e8642fdf44053ae",
+                                                                     sequence="ffffffff",
+                                                                     use_trusted_input=True),
+                                    tx_to_sign_outputs=TxToSignOutputs(outputs=["c0a695350000000017a9140f4de5d62f29e58670012fc4588cbfff7f3ef0f787", "c07fdc0b0000000017a914963c74d26ec7787f4f17c6d8d7f6c756da41e9a387"],
+                                                                       locktime="00000000",
+                                                                       signingpath="04""8000002D""00000001""00000001""00000000"),
+                                    expected_result="314402207034c4bbe48afb53f39b0ef34587ca33ec37e1e412ab75832b23d30bf9880cbf02205878b75e7b0da6a6ff79d268b2de5fa6653f994f6c730c0c773fe2ab5ad0d19c01"
+                                    )
 
 @pytest.mark.manual
 @pytest.mark.btc
 class TestApduBuilder(BaseTestBtc):
 
-    apdu_test_data = [test_ljs, test_ms]
+    apdu_test_data = [test_alert_single_input]
 
     @pytest.mark.parametrize('test_data', apdu_test_data)
     def test_replay_ledgerjs_tests(self, test_data: TestData) -> None:
 
         btc = DeviceAppBtc()
+
+        sign_path = "04""8000002D""00000001""00000001""00000000"
+
+        newInstantPassword = "0123"
+        newRecoveryPassword = "abcd"
+        btc.setBtcvPassword(p1="00", data=newInstantPassword)
+        btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
+
+        resp1 = btc.getWallet3KeysAddress(sign_path)
+        # address: 2Myo7fcq7N8xMg66ZmxEKakttxyepVqVTba
+        # redeemScript: 635167635267536868410450831f9831a46e3b264034ae2d8ef24555a2aa9e66579eab91e4a7c7794e01c7f4c88aff1f69c6acfd2f857f33dbf102a9b79429828110447d0743f705e6bcd041048f54726f142383fe06f7385d6445b44d6f0a0dac7bdd7a6ea7dec21cdd7115777d4305aabd65b8566055cddd0135efb617718c0fc92d174d89452bb43b78061a4104d96eb418af0c6659526f236452d96b5f5c0bf0469ba824868e58ba25c66eba9cf63a0d84eac158aa976c17328ac1ae75c7c9949f8c57571e046c8e8642fdf44053ae
+
+        print(self.split_pubkey_data(resp1))
+
 
         trustedInputApdu = prepare_trusted_input_apdu(test_data.prevout_data)
         for command in trustedInputApdu.commands:
@@ -174,4 +166,56 @@ class TestApduBuilder(BaseTestBtc):
         for command in untrustedHashSign.commands:
             response = btc.sendRawApdu(bytes.fromhex(command))
 
-        assert(response.hex() == test_data.expected_result)
+        print("Signature 1: ", response.hex())
+
+        assert (response.hex() == test_data.expected_result)
+
+        #
+        # trustedInputApdu = prepare_trusted_input_apdu(test_data.prevout_data)
+        # for command in trustedInputApdu.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # test_data.tx_to_sign_inputs.trustedinput = response.hex()
+        #
+        # untrustedHashTxInputStart = prepare_untrusted_hash_tx_input_apdu(test_data.tx_to_sign_inputs)
+        # for command in untrustedHashTxInputStart.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # untrustedHashTxInputFinalize = prepare_untrusted_hash_tx_finalize_apdu(test_data.tx_to_sign_outputs)
+        # for command in untrustedHashTxInputFinalize.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # passwordHash = "49EB9DA9B0BF0F36DC17FEF23F7002A7FD502E0F4F8475F76F0F07BEA229E324"
+        # response = btc.useBtcvSignaturePassword(p1="01", data=passwordHash)
+        #
+        # untrustedHashSign = prepare_untrusted_hash_sign(test_data.tx_to_sign_outputs)
+        # for command in untrustedHashSign.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # print("Signature 2: ", response.hex())
+        #
+        #
+        # trustedInputApdu = prepare_trusted_input_apdu(test_data.prevout_data)
+        # for command in trustedInputApdu.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # test_data.tx_to_sign_inputs.trustedinput = response.hex()
+        #
+        # untrustedHashTxInputStart = prepare_untrusted_hash_tx_input_apdu(test_data.tx_to_sign_inputs)
+        # for command in untrustedHashTxInputStart.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # untrustedHashTxInputFinalize = prepare_untrusted_hash_tx_finalize_apdu(test_data.tx_to_sign_outputs)
+        # for command in untrustedHashTxInputFinalize.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # passwordHash = "969EB1C17FA7B6F45D3773FC8B7534324C828779173E7AA1FE9FDFDD333BED8D"
+        # response = btc.useBtcvSignaturePassword(p1="02", data=passwordHash)
+        #
+        # untrustedHashSign = prepare_untrusted_hash_sign(test_data.tx_to_sign_outputs)
+        # for command in untrustedHashSign.commands:
+        #     response = btc.sendRawApdu(bytes.fromhex(command))
+        #
+        # print("Signature 3: ", response.hex())
+        #
+        # assert(False)
