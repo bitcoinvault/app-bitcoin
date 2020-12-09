@@ -49,9 +49,8 @@ class TestBtcTxSignature(BaseTestBtc):
         for pubkey in pubkeys_data:
             print(pubkey)
             assert  pubkey.pubkey_comp[1:].hex() in expected_pubkeys
-
-        btc.setBtcvPassword(p1="00", data=newInstantPassword)
         btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
+        btc.setBtcvPassword(p1="00", data=newInstantPassword)
 
         resp1 = btc.getWallet3KeysAddress(output_paths[0])
         pubkey = self.split_pubkey_data(resp1)
@@ -62,3 +61,12 @@ class TestBtcTxSignature(BaseTestBtc):
         pubkey = self.split_pubkey_data(resp2)
         print(pubkey)
         assert pubkey.address == 'RBoRVh3V1pzWpQCaJj5ak1v2v6TFikYnvp'
+
+        btc.setBtcvPassword(p1="00", data="00")
+        # btc.setBtcvPassword(p1="01", data="00")
+
+        resp1 = btc.getWallet3KeysAddress(output_paths[0])
+        pubkey = self.split_pubkey_data(resp1)
+        print(pubkey)
+
+        # assert pubkey.address == 'RXE5oc9Xmv3hHpV2n6YFpxr6FmpA13EEoX'
