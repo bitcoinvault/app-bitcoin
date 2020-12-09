@@ -69,4 +69,4 @@ class TestBtcTxSignature(BaseTestBtc):
         pubkey = self.split_pubkey_data(resp1)
         print(pubkey)
 
-        # assert pubkey.address == 'RXE5oc9Xmv3hHpV2n6YFpxr6FmpA13EEoX'
+        assert pubkey.address == 'RXE5oc9Xmv3hHpV2n6YFpxr6FmpA13EEoX'

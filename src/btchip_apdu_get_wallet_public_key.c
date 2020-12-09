@@ -137,7 +137,7 @@ unsigned short btchip_apdu_get_wallet_public_key() {
         G_io_apdu_buffer[0] = 65;
         unsigned char hashBuffer[21];
         hashBuffer[0] = 0x3C;
-        generate3KeysScriptHash(hashBuffer+1, keyPath, chainCode);
+        generateMultiKeyScriptHash(hashBuffer+1, keyPath, chainCode);
         size_t bufferLen = 34;
         keyLength = btchip_public_key_to_encoded_base58(hashBuffer, 21, G_io_apdu_buffer + 67, bufferLen, 60, 1);
     } else if (!(segwit || nativeSegwit)) {
