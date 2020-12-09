@@ -183,14 +183,14 @@ class TestApduBuilder(BaseTestBtc):
     apdu_test_data = [test_alert_single_input, test_alert_two_inputs]
 
     @pytest.mark.parametrize('test_data', apdu_test_data)
-    def test_replay_ledgerjs_tests(self, test_data: TestData) -> None:
+    def test_btcv_3keys_signature(self, test_data: TestData) -> None:
 
         btc = DeviceAppBtc()
 
         newInstantPassword = "0123"
         newRecoveryPassword = "abcd"
-        btc.setBtcvPassword(p1="00", data=newInstantPassword)
         btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
+        btc.setBtcvPassword(p1="00", data=newInstantPassword)
 
         trustedInputsApdu = [prepare_trusted_input_apdu(prevout_data) for prevout_data in (test_data.prevouts_data)]
 
