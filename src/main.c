@@ -102,6 +102,23 @@ unsigned int io_seproxyhal_touch_display_ok(const bagl_element_t *e) {
     return 0; // DO NOT REDRAW THE BUTTON
 }
 
+
+unsigned int io_seproxyhal_touch_set_btcv_passwd_cancel(const bagl_element_t *e) {
+    // user denied the transaction, tell the USB side
+    btchip_bagl_btcv_password_confirmation_display(0);
+    // redraw ui
+    ui_idle();
+    return 0; // DO NOT REDRAW THE BUTTON
+}
+
+unsigned int io_seproxyhal_touch_set_btcv_passwd_ok(const bagl_element_t *e) {
+    // user accepted the transaction, tell the USB side
+    btchip_bagl_btcv_password_confirmation_display(1);
+    // redraw ui
+    ui_idle();
+    return 0; // DO NOT REDRAW THE BUTTON
+}
+
 unsigned int io_seproxyhal_touch_sign_cancel(const bagl_element_t *e) {
     // user denied the transaction, tell the USB side
     btchip_bagl_user_action_signtx(0, 0);
@@ -554,6 +571,44 @@ UX_FLOW(ux_request_pubkey_approval_flow,
 );
 
 //////////////////////////////////////////////////////////////////////
+UX_STEP_VALID(
+    ux_set_btcv_instant_password_approval_flow_1_step,
+    pbb,
+    io_seproxyhal_touch_set_btcv_passwd_ok(NULL),
+    {
+      &C_icon_validate_14,
+      "Allow instant",
+      "passwd change",
+    });
+UX_STEP_VALID(
+    ux_set_btcv_recovery_password_approval_flow_1_step,
+    pbb,
+    io_seproxyhal_touch_set_btcv_passwd_ok(NULL),
+    {
+      &C_icon_validate_14,
+      "Allow recovery",
+      "passwd change",
+    });
+UX_STEP_VALID(
+    ux_set_btcv_password_approval_flow_2_step,
+    pbb,
+    io_seproxyhal_touch_set_btcv_passwd_cancel(NULL),
+    {
+      &C_icon_crossmark,
+      "Deny password",
+      "change",
+    });
+
+UX_FLOW(ux_set_btcv_instant_password_approval_flow,
+  &ux_set_btcv_instant_password_approval_flow_1_step,
+  &ux_set_btcv_password_approval_flow_2_step
+);
+
+UX_FLOW(ux_set_btcv_recovery_password_approval_flow,
+  &ux_set_btcv_recovery_password_approval_flow_1_step,
+  &ux_set_btcv_password_approval_flow_2_step
+);
+
 UX_STEP_NOCB(
     ux_request_change_path_approval_flow_1_step,
     pbb,
@@ -1118,6 +1173,20 @@ void btchip_bagl_display_token()
 void btchip_bagl_request_pubkey_approval()
 {
     ux_flow_init(0, ux_request_pubkey_approval_flow, NULL);
+}
+
+void btchip_bagl_set_btcv_instant_password_approval()
+{
+#if defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_set_btcv_instant_password_approval_flow, NULL);
+#endif
+}
+
+void btchip_bagl_set_btcv_recovery_password_approval()
+{
+#if defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_set_btcv_recovery_password_approval_flow, NULL);
+#endif
 }
 
 void btchip_bagl_request_change_path_approval(unsigned char* change_path)

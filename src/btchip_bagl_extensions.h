@@ -47,6 +47,10 @@ void btchip_bagl_user_action_display(unsigned char confirming);
 void btchip_bagl_request_pubkey_approval(void);
 void btchip_bagl_request_change_path_approval(unsigned char* change_path);
 
+// Btcv password(s) change
+void btchip_bagl_set_btcv_instant_password_approval();
+void btchip_bagl_set_btcv_recovery_password_approval();
+
 // UI to confirm processing of tx with segwit inputs
 void btchip_bagl_request_segwit_input_approval(void);
 
