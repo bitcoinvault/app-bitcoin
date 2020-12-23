@@ -2,7 +2,7 @@ import pytest
 from typing import Optional, List
 from functools import reduce
 from helpers.basetest import BaseTestBtc, BtcPublicKey, TxData
-from helpers.deviceappbtc import DeviceAppBtc
+from helpers.deviceappbtc import DeviceAppBtc, BTC_P2
 
 ## key generation is dependant on device seed
 ## seed used for testing purposes:
@@ -52,12 +52,18 @@ class TestBtcTxSignature(BaseTestBtc):
         btc.setBtcvPassword(p1="01", data=newRecoveryPassword)
         btc.setBtcvPassword(p1="00", data=newInstantPassword)
 
-        resp1 = btc.getWallet3KeysAddress(output_paths[0])
+        resp1 = btc.getWallet3KeysAddress(BTC_P2.BTCV_3KEYS_REGULAR_KEY, output_paths[0])
         pubkey = self.split_pubkey_data(resp1)
         print(pubkey)
         assert pubkey.address == 'RHU4v18eBZVExTUTAf3qDxACQHxw44YZzV'
+        resp1 = btc.getWallet3KeysAddress(BTC_P2.BTCV_3KEYS_INSTANT_KEY, output_paths[0])
+        pubkey = self.split_pubkey_data(resp1)
+        print(pubkey)
+        resp1 = btc.getWallet3KeysAddress(BTC_P2.BTCV_3KEYS_RECOVERY_KEY, output_paths[0])
+        pubkey = self.split_pubkey_data(resp1)
+        print(pubkey)
 
-        resp2 = btc.getWallet3KeysAddress(output_paths[1])
+        resp2 = btc.getWallet3KeysAddress(BTC_P2.BTCV_3KEYS_REGULAR_KEY, output_paths[1])
         pubkey = self.split_pubkey_data(resp2)
         print(pubkey)
         assert pubkey.address == 'RBoRVh3V1pzWpQCaJj5ak1v2v6TFikYnvp'
@@ -65,7 +71,7 @@ class TestBtcTxSignature(BaseTestBtc):
         btc.setBtcvPassword(p1="00", data="00")
         # btc.setBtcvPassword(p1="01", data="00")
 
-        resp1 = btc.getWallet3KeysAddress(output_paths[0])
+        resp1 = btc.getWallet3KeysAddress(BTC_P2.BTCV_3KEYS_REGULAR_KEY, output_paths[0])
         pubkey = self.split_pubkey_data(resp1)
         print(pubkey)
 

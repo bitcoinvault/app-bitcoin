@@ -22,6 +22,9 @@ class BTC_P2:
     LEGACY_ADDR = bytes.fromhex("00")
     P2SH_P2WPKH_ADDR = bytes.fromhex("01")
     BECH32_ADDR = bytes.fromhex("02")
+    BTCV_3KEYS_REGULAR_KEY = bytes.fromhex("04")
+    BTCV_3KEYS_INSTANT_KEY = bytes.fromhex("14")
+    BTCV_3KEYS_RECOVERY_KEY = bytes.fromhex("24")
     # UntrustedHashTxInputStart
     STD_INPUTS_ = bytes.fromhex("00")
     SEGWIT_INPUTS = bytes.fromhex("02")
@@ -68,8 +71,9 @@ class DeviceAppBtc(DeviceAppProxy):
         return self.sendApdu("getWalletPublicKey", "00", "00", data)
 
     def getWallet3KeysAddress(self,
-                           data: BytesOrStr) -> bytes:
-        return self.sendApdu("getWalletPublicKey", "00", "04", data)
+                              p2: BytesOrStr,
+                              data: BytesOrStr) -> bytes:
+        return self.sendApdu("getWalletPublicKey", "00", p2, data)
 
     def setBtcvPassword(self,
                         p1: BytesOrStr,
