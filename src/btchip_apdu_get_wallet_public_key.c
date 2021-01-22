@@ -125,18 +125,14 @@ unsigned short btchip_apdu_get_wallet_public_key() {
 
     unsigned char bip44_enforced = enforce_bip44_coin_type(G_io_apdu_buffer + ISO_OFFSET_CDATA, true);
     if(btcv3KeysAddr && G_io_apdu_buffer[ISO_OFFSET_P2] == P2_BTCV_3KEYS_ADDR_INSTANT_PUBKEY){
-    PRINTF("MG1 instant path\n");
         btchip_private_derive_keypair(keyPath, 1, chainCode, Instant);
 }
     else if(btcv3KeysAddr && G_io_apdu_buffer[ISO_OFFSET_P2] == P2_BTCV_3KEYS_ADDR_RECOVERY_PUBKEY){
-    PRINTF("MG1 recovery path\n");
         btchip_private_derive_keypair(keyPath, 1, chainCode, Recovery);
 }
     else{
-    PRINTF("MG1 regular path\n");
         btchip_private_derive_keypair(keyPath, 1, chainCode, Regular);
 }
-
     G_io_apdu_buffer[0] = 65;
     keyLength = get_public_key_chain_code(G_io_apdu_buffer + ISO_OFFSET_CDATA, uncompressedPublicKeys, G_io_apdu_buffer + 1, chainCode);
 

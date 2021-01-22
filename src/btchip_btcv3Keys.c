@@ -2,9 +2,9 @@
 #include "btchip_internal.h"
 #include "btchip_apdu_constants.h"
 
-void insertPubkeyToBuffer(unsigned char *buffer, unsigned char *keyPath, unsigned char *chainCode, enum BtcvKeyType keyType, unsigned int *bufferTailIndex)
+void insertPubkeyToBuffer(unsigned char *buffer, unsigned char *keyPath, enum BtcvKeyType keyType, unsigned int *bufferTailIndex)
 {
-    btchip_private_derive_keypair(keyPath, 1, chainCode, keyType);
+    btchip_private_derive_keypair(keyPath, 1, NULL, keyType);
     PRINTF("pubkey (type %d):%.*H\n", keyType, btchip_public_key_D.W_len, btchip_public_key_D.W);
     buffer[(*bufferTailIndex)++] = btchip_public_key_D.W_len;
     os_memmove(buffer + *bufferTailIndex, btchip_public_key_D.W, btchip_public_key_D.W_len);
@@ -13,7 +13,6 @@ void insertPubkeyToBuffer(unsigned char *buffer, unsigned char *keyPath, unsigne
 
 void generateMultiKeyScriptHash(unsigned char *hashBuffer, unsigned char *keyPath, unsigned char *chainCode)
 {
-    PRINTF("generateMultiKeyScriptHash\n");
     if(!isPasswordSet((void *)&N_btchip.btcvInstantPassword))
     {
         // OP_IF OP_1 OP_ELSE OP_2 OP_ENDIF
@@ -21,16 +20,13 @@ void generateMultiKeyScriptHash(unsigned char *hashBuffer, unsigned char *keyPat
         unsigned int bufferTailIndex = 5;
 
         // alert pubkey
-        insertPubkeyToBuffer(scriptBuffer, keyPath, chainCode, Regular, &bufferTailIndex);
+        insertPubkeyToBuffer(scriptBuffer, keyPath, Regular, &bufferTailIndex);
         // recovery pubkey
-        insertPubkeyToBuffer(scriptBuffer, keyPath, chainCode, Recovery, &bufferTailIndex);
+        insertPubkeyToBuffer(scriptBuffer, keyPath, Recovery, &bufferTailIndex);
 
         scriptBuffer[bufferTailIndex++] = 0x52; // OP_2
         scriptBuffer[bufferTailIndex++] = 0xAE; // OP_CHECKMULTISIG
-        PRINTF("2k scriptBuffer: %.*H\n", bufferTailIndex, scriptBuffer);
-        PRINTF("2k bufferTailIndex: %d\n", bufferTailIndex);
         btchip_public_key_hash160(scriptBuffer, 139, hashBuffer); // script hash, actually
-        PRINTF("2k hashBuffer: %.*H\n", 20, hashBuffer);
     }
     else
     {
@@ -39,11 +35,11 @@ void generateMultiKeyScriptHash(unsigned char *hashBuffer, unsigned char *keyPat
         unsigned int bufferTailIndex = 9;
 
         // alert pubkey
-        insertPubkeyToBuffer(scriptBuffer, keyPath, chainCode, Regular, &bufferTailIndex);
+        insertPubkeyToBuffer(scriptBuffer, keyPath, Regular, &bufferTailIndex);
         // instant pubkey
-        insertPubkeyToBuffer(scriptBuffer, keyPath, chainCode, Instant, &bufferTailIndex);
+        insertPubkeyToBuffer(scriptBuffer, keyPath, Instant, &bufferTailIndex);
         // recovery pubkey
-        insertPubkeyToBuffer(scriptBuffer, keyPath, chainCode, Recovery, &bufferTailIndex);
+        insertPubkeyToBuffer(scriptBuffer, keyPath, Recovery, &bufferTailIndex);
 
         scriptBuffer[bufferTailIndex++] = 0x53; // OP_3
         scriptBuffer[bufferTailIndex++] = 0xAE; // OP_CHECKMULTISIG
