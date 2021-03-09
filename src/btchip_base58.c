@@ -95,7 +95,7 @@ int btchip_encode_base58(const unsigned char *in, size_t length,
   }
 
   outputSize = (length - zeroCount) * 138 / 100 + 1;
-  if (*outlen < outputSize) {
+  if (G_coin_config->kind != COIN_KIND_BITCOIN_VAULT && *outlen < outputSize) {
     *outlen = outputSize;
     return -1;
   }

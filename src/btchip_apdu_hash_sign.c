@@ -180,12 +180,13 @@ void btchip_bagl_user_action_signtx(unsigned char confirming, unsigned char dire
         // Fetch the private key
         if (COIN_KIND_BITCOIN_VAULT == G_coin_config->kind)
         {
+            cx_ecfp_public_key_t public_key;
             if(BTCV_TX_TYPE_INSTANT == btchip_context_D.transactionContext.btcvTxType)
-                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Instant);
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, &public_key, Instant);
             else if(BTCV_TX_TYPE_RECOVERY == btchip_context_D.transactionContext.btcvTxType)
-                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Recovery);
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, &public_key, Recovery);
             else
-                btchip_private_derive_keypair(btchip_context_D.transactionSummary.summarydata.keyPath, 0, NULL, Regular);
+                btchip_private_derive_keypair(btchip_context_D.transactionSummary.keyPath, 0, NULL, &private_key, &public_key, Regular);
         }
         else
         {

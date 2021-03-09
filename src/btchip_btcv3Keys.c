@@ -4,11 +4,13 @@
 
 void insertPubkeyToBuffer(unsigned char *buffer, unsigned char *keyPath, enum BtcvKeyType keyType, unsigned int *bufferTailIndex)
 {
-    btchip_private_derive_keypair(keyPath, 1, NULL, keyType);
-    PRINTF("pubkey (type %d):%.*H\n", keyType, btchip_public_key_D.W_len, btchip_public_key_D.W);
-    buffer[(*bufferTailIndex)++] = btchip_public_key_D.W_len;
-    os_memmove(buffer + *bufferTailIndex, btchip_public_key_D.W, btchip_public_key_D.W_len);
-    *bufferTailIndex += btchip_public_key_D.W_len;
+    cx_ecfp_private_key_t private_key;
+    cx_ecfp_public_key_t public_key;
+    btchip_private_derive_keypair(keyPath, 1, NULL, &private_key, &public_key, keyType);
+    buffer[(*bufferTailIndex)++] = public_key.W_len;
+    os_memmove(buffer + *bufferTailIndex, &public_key.W, public_key.W_len);
+    *bufferTailIndex += public_key.W_len;
+    PRINTF("bufferTailIndex: %d\n", bufferTailIndex);
 }
 
 void generateMultiKeyScriptHash(unsigned char *hashBuffer, unsigned char *keyPath, unsigned char *chainCode)

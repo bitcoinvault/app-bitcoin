@@ -220,7 +220,7 @@ bool handle_output_state() {
 
 void get_public_key(unsigned char* keyPath, cx_ecfp_public_key_t* public_key) {
     cx_ecfp_private_key_t private_key;
-    btchip_private_derive_keypair(keyPath, 1, NULL, &private_key, public_key);
+    btchip_private_derive_keypair(keyPath, 1, NULL, &private_key, public_key, Regular);
 }
 
 // out should be 32 bytes, even only 20 bytes is significant for output
